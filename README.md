@@ -27,16 +27,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Simple example
 ==============
 
-  from netfilter.rule import Rule,Match
-  from netfilter.table import Table
+    from netfilter.rule import Rule,Match
+    from netfilter.table import Table
 
-  rule = Rule(
-    in_interface='eth0',
-    protocol='tcp',
-    matches=[Match('tcp', '--dport 80')],
-    jump='ACCEPT')))
+    rule = Rule(
+        in_interface='eth0',
+        protocol='tcp',
+        matches=[Match('tcp', '--dport 80')],
+        jump='ACCEPT')))
 
-  table = Table('filter')
-  table.append_rule('INPUT', rule)
+      table = Table('filter')
+      table.append_rule('INPUT', rule)
 
-  table.delete_rule('INPUT', rule)
+      table.delete_rule('INPUT', rule)
