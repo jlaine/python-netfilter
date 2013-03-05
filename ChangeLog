@@ -1,0 +1,49 @@
+python-netfilter 0.5.9 (2012-10-02)
+ * Handle already existing IPv6 chains like IPv4.
+
+python-netfilter 0.5.8 (2012-09-24)
+ * Optimise chain and rule parsing.
+ * Reindent code with spaces.
+
+python-netfilter 0.5.7 (2011-03-21)
+ * use subprocess.Popen instead of popen2.Popen3 in netfilter.firewall
+ * handle match negation format of iptables-save 1.4.3 (thanks Björn Lässig)
+
+python-netfilter 0.5.6 (2009-03-27)
+ * relicense under GPLv3 or later
+
+python-netfilter 0.5.5 (2008-10-09)
+ * use Popen.communicate to avoid deadlock calling iptables-save
+
+python-netfilter 0.5.4 (2008-04-17)
+ * handle source/destination format of iptables-save 1.4.0 (appends /32)
+ * add netfilter.firewall.getNode to retrieve node name (uname -n)
+
+python-netfilter 0.5.3 (2007-12-31)
+ * add IPv6 support to Table and Firewall classes
+
+python-netfilter 0.5.2 (2007-11-23)
+ * internal API: use lists, not strings to represent commands
+ * use subprocess.Popen instead of popen2.Popen3
+
+python-netfilter 0.5.1 (2007-11-07)
+ * remove hard-coded path to iptables / iptables-save
+
+python-netfilter 0.5.0 (2007-08-29)
+ * add netfilter.firewall
+
+python-netfilter 0.4.3 (2007-07-25)
+ * add a buffered mode to netfilter.table.Table
+
+python-netfilter 0.4.2 (2007-07-24)
+ * make it possible to delete/flush all chains in a table
+ * raise exceptions when iptables commands fail
+
+python-netfilter 0.4.1 (2007-07-23)
+ * preserve ordering of tables / chains
+ * add a method to dump tables / chains / rules like iptable-save
+ * make it possible to get / set the policy for a chain
+ * add support for 'goto' target
+
+python-netfilter 0.4.0 (2007-07-20)
+ * initial release
