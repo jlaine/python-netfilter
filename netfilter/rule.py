@@ -223,7 +223,8 @@ class Rule:
         iptables for the current Rule.
         """
         def host_bits(opt, optval):
-            m = re.match(r'^! (.*)', optval)
+            # handle the case where this is a negated value
+            m = re.match(r'^!\s*(.*)', optval)
             if m:
                 return ['!', opt, m.group(1)]
             else:
