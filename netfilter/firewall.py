@@ -102,10 +102,11 @@ class Firewall:
         """Print program usage."""
         sys.stderr.write("Usage: %s {start|stop|restart}\n" % prog)
 
-    def acceptForward(self, interface=None):
-        self.printMessage("allow FORWARD", interface)
+    def acceptForward(self, in_interface=None, out_interface=None):
+        self.printMessage("allow FORWARD", in_interface)
         self.filter.append_rule('FORWARD', Rule(
-            in_interface=interface,
+            in_interface=in_interface,
+            out_interface=out_interface,
             jump='ACCEPT'))
 
     def acceptIcmp(self, interface=None):
