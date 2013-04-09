@@ -1,3 +1,6 @@
+python-netfilter 0.6.0 (UNRELEASED)
+ * Handle negated source / destination.
+
 python-netfilter 0.5.9 (2012-10-02)
  * Handle already existing IPv6 chains like IPv4.
 

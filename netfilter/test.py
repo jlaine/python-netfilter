@@ -154,7 +154,7 @@ class RuleTestCase(unittest.TestCase):
         self.assertEqual(rule.jump.name(), 'ACCEPT')
         self.assertEqual(rule.jump.options(), {})
         self.assertEqual(rule.specbits(), ['-j', 'ACCEPT'])
-    
+
     def testSource(self):
         rule = Rule(source='192.168.1.2', jump='ACCEPT')
         self.assertEqual(rule.protocol, None)
@@ -166,6 +166,17 @@ class RuleTestCase(unittest.TestCase):
         self.assertEqual(rule.jump.options(), {})
         self.assertEqual(rule.specbits(), ['-s', '192.168.1.2', '-j', 'ACCEPT'])
 
+    def testSourceNegated(self):
+        rule = Rule(source='! 192.168.1.2', jump='ACCEPT')
+        self.assertEqual(rule.protocol, None)
+        self.assertEqual(rule.in_interface, None)
+        self.assertEqual(rule.out_interface, None)
+        self.assertEqual(rule.source, '! 192.168.1.2')
+        self.assertEqual(rule.destination, None)
+        self.assertEqual(rule.jump.name(), 'ACCEPT')
+        self.assertEqual(rule.jump.options(), {})
+        self.assertEqual(rule.specbits(), ['!', '-s', '192.168.1.2', '-j', 'ACCEPT'])
+
     def testDestination(self):
         rule = Rule(destination='192.168.1.3', jump='REJECT')
         self.assertEqual(rule.protocol, None)
@@ -176,7 +187,18 @@ class RuleTestCase(unittest.TestCase):
         self.assertEqual(rule.jump.name(), 'REJECT')
         self.assertEqual(rule.jump.options(), {})
         self.assertEqual(rule.specbits(), ['-d', '192.168.1.3', '-j', 'REJECT'])
-    
+
+    def testDestinationNegated(self):
+        rule = Rule(destination='! 192.168.1.3', jump='REJECT')
+        self.assertEqual(rule.protocol, None)
+        self.assertEqual(rule.in_interface, None)
+        self.assertEqual(rule.out_interface, None)
+        self.assertEqual(rule.source, None)
+        self.assertEqual(rule.destination, '! 192.168.1.3')
+        self.assertEqual(rule.jump.name(), 'REJECT')
+        self.assertEqual(rule.jump.options(), {})
+        self.assertEqual(rule.specbits(), ['!', '-d', '192.168.1.3', '-j', 'REJECT'])
+
     def testSourceDestinationProtocol(self):
         rule = Rule(source='192.168.1.2', destination='192.168.1.3',
             protocol='tcp', jump='DROP')

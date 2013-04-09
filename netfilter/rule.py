@@ -222,6 +222,13 @@ class Rule:
         """Returns the array of arguments that would be given to
         iptables for the current Rule.
         """
+        def host_bits(opt, optval):
+            m = re.match(r'^! (.*)', optval)
+            if m:
+                return ['!', opt, m.group(1)]
+            else:
+                return [opt, optval]
+
         bits = []
         if self.protocol:
             bits.extend(['-p', "%s" % self.protocol])
@@ -230,9 +237,9 @@ class Rule:
         if self.out_interface:
             bits.extend(['-o', "%s" % self.out_interface])
         if self.source:
-            bits.extend(['-s', "%s" % self.source])
+            bits.extend(host_bits('-s', self.source))
         if self.destination:
-            bits.extend(['-d', "%s" % self.destination])
+            bits.extend(host_bits('-d', self.destination))
         for mod in self.matches:
             bits.extend(['-m', mod.name()])
             bits.extend(mod.specbits())
