@@ -3,6 +3,7 @@
 'exclude': 'netfilter/__init__\.py',
 'license': """python-netfilter - Python modules for manipulating netfilter rules
 Copyright (C) 2007-2012 Bolloré Telecom
+Copyright (C) 2013 Jeremy Lainé
 See AUTHORS file for a full list of contributors.
 
 This program is free software: you can redistribute it and/or modify
