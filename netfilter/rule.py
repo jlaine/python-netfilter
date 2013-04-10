@@ -234,9 +234,9 @@ class Rule:
         if self.protocol:
             bits.extend(['-p', "%s" % self.protocol])
         if self.in_interface:
-            bits.extend(['-i', "%s" % self.in_interface])
+            bits.extend(host_bits('-i', self.in_interface))
         if self.out_interface:
-            bits.extend(['-o', "%s" % self.out_interface])
+            bits.extend(host_bits('-o', self.out_interface))
         if self.source:
             bits.extend(host_bits('-s', self.source))
         if self.destination:

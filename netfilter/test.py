@@ -220,7 +220,17 @@ class RuleTestCase(unittest.TestCase):
         self.assertEqual(rule.source, None)
         self.assertEqual(rule.destination, None)
         self.assertEqual(rule.specbits(), ['-i', 'eth1', '-o', 'eth2', '-j', 'REJECT'])
-    
+
+    def testInterfacesNegated(self):
+        rule = Rule(in_interface='!eth1', out_interface='!eth2',
+            jump='REJECT')
+        self.assertEqual(rule.protocol, None)
+        self.assertEqual(rule.in_interface, '!eth1')
+        self.assertEqual(rule.out_interface, '!eth2')
+        self.assertEqual(rule.source, None)
+        self.assertEqual(rule.destination, None)
+        self.assertEqual(rule.specbits(), ['!', '-i', 'eth1', '!', '-o', 'eth2', '-j', 'REJECT'])
+
     def testTargetLog(self):
         rule = Rule(jump=Target('LOG', '--log-prefix "ICMP accepted : " --log-level 4'))
         self.assertEqual(rule.specbits(), ['-j', 'LOG', '--log-prefix', 'ICMP accepted : ', '--log-level', '4'])
@@ -244,7 +254,7 @@ class RuleTestCase(unittest.TestCase):
         rule = Rule(protocol='tcp', jump='ACCEPT')
         rule.matches.append(Match('tcp', '--tcp-flags ACK,SYN ACK'))
         self.assertEqual(rule.specbits(), ['-p', 'tcp', '-m', 'tcp', '--tcp-flags', 'ACK,SYN', 'ACK', '-j', 'ACCEPT'])
-    
+
     def testMatchTcpNotFlags(self):
         rule = Rule(protocol='tcp', jump='ACCEPT')
         rule.matches.append(Match('tcp', '--tcp-flags ! ACK,SYN ACK'))
