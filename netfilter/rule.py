@@ -232,7 +232,7 @@ class Rule:
 
         bits = []
         if self.protocol:
-            bits.extend(['-p', "%s" % self.protocol])
+            bits.extend(host_bits('-p', self.protocol))
         if self.in_interface:
             bits.extend(host_bits('-i', self.in_interface))
         if self.out_interface:

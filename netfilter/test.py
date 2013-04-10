@@ -301,8 +301,8 @@ class ParseRuleTestCase(unittest.TestCase):
         self.assertEqual(rule, Rule(
             matches=[Match('state', '--state ESTABLISHED,RELATED')]))
         self.assertEqual(rule.specbits(), ['-m', 'state', '--state', 'ESTABLISHED,RELATED'])
-        
-    def testNegation(self):
+
+    def testSourceNegated(self):
         # iptables < 1.4.3
         rule = netfilter.parser.parse_rule('-s ! 10.1.0.0/20 -j LOG --log-prefix "Martians "')
         self.assertEqual(rule, Rule(source='! 10.1.0.0/20',jump=Target('LOG', '--log-prefix "Martians "')))
@@ -310,6 +310,39 @@ class ParseRuleTestCase(unittest.TestCase):
         # iptables >= 1.4.3
         rule = netfilter.parser.parse_rule('! -s 10.1.0.0/20 -j LOG --log-prefix "Martians "')
         self.assertEqual(rule, Rule(source='! 10.1.0.0/20',jump=Target('LOG', '--log-prefix "Martians "')))
+
+    def testDestinationNegated(self):
+        # iptables < 1.4.3
+        rule = netfilter.parser.parse_rule('-d ! 10.1.0.0/20 -j LOG --log-prefix "Martians "')
+        self.assertEqual(rule, Rule(destination='! 10.1.0.0/20',jump=Target('LOG', '--log-prefix "Martians "')))
+
+        # iptables >= 1.4.3
+        rule = netfilter.parser.parse_rule('! -d 10.1.0.0/20 -j LOG --log-prefix "Martians "')
+        self.assertEqual(rule, Rule(destination='! 10.1.0.0/20',jump=Target('LOG', '--log-prefix "Martians "')))
+
+    def testInterfacesNegated(self):
+        # iptables < 1.4.3
+        rule = netfilter.parser.parse_rule('-i ! eth0 -j LOG --log-prefix "Martians "')
+        self.assertEqual(rule, Rule(in_interface='! eth0',jump=Target('LOG', '--log-prefix "Martians "')))
+
+        rule = netfilter.parser.parse_rule('-o ! eth0 -j LOG --log-prefix "Martians "')
+        self.assertEqual(rule, Rule(out_interface='! eth0',jump=Target('LOG', '--log-prefix "Martians "')))
+
+        # iptables >= 1.4.3
+        rule = netfilter.parser.parse_rule('! -i eth0 -j LOG --log-prefix "Martians "')
+        self.assertEqual(rule, Rule(in_interface='! eth0',jump=Target('LOG', '--log-prefix "Martians "')))
+
+        rule = netfilter.parser.parse_rule('! -o eth0 -j LOG --log-prefix "Martians "')
+        self.assertEqual(rule, Rule(out_interface='! eth0',jump=Target('LOG', '--log-prefix "Martians "')))
+
+    def testProtocolNegated(self):
+        # iptables < 1.4.3
+        rule = netfilter.parser.parse_rule('-p ! tcp -j LOG --log-prefix "Martians "')
+        self.assertEqual(rule, Rule(protocol='! tcp',jump=Target('LOG', '--log-prefix "Martians "')))
+
+        # iptables >= 1.4.3
+        rule = netfilter.parser.parse_rule('! -p tcp -j LOG --log-prefix "Martians "')
+        self.assertEqual(rule, Rule(protocol='! tcp',jump=Target('LOG', '--log-prefix "Martians "')))
 
 class BufferedTestCase(unittest.TestCase):
     def testJump(self):
