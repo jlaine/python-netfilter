@@ -2,3 +2,4 @@ include COPYING
 include ChangeLog
 include README.md
 recursive-include netfilter *.py
+recursive-include tests *.py
