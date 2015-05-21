@@ -1,5 +1,5 @@
 include AUTHORS
 include COPYING
 include ChangeLog
-include README
+include README.md
 recursive-include netfilter *.py
