@@ -20,7 +20,6 @@
 
 import logging
 import re
-import types
 
 import netfilter.parser
 
@@ -52,7 +51,7 @@ class Extension:
         return not result
 
     def __parse_options(self, options):
-        if isinstance(options, types.ListType):
+        if isinstance(options, list):
             bits = options
         else:
             bits = netfilter.parser.split_words(options)
@@ -72,7 +71,7 @@ class Extension:
             pos += 1
             # rewrite option to its canonical name
             tmp_opt = m.group(1)
-            if self.__rewrite_options.has_key(tmp_opt):
+            if tmp_opt in self.__rewrite_options:
                 tmp_opt = self.__rewrite_options[tmp_opt]
             cur_opt.append(tmp_opt)
             
@@ -110,7 +109,7 @@ class Extension:
         iptables for the current Extension.
         """
         bits = []
-        for opt in self.__options:
+        for opt in sorted(self.__options):
             # handle the case where this is a negated option
             m = re.match(r'^! (.*)', opt)
             if m:
@@ -119,7 +118,7 @@ class Extension:
                 bits.append("--%s" % opt)
                 
             optval = self.__options[opt]
-            if isinstance(optval, types.ListType):
+            if isinstance(optval, list):
                 bits.extend(optval)
             else:
                 bits.append(optval)
@@ -160,7 +159,7 @@ class Rule:
         self.packets = 0
         self.bytes = 0
         # assign supplied arguments
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             self.__setattr__(k, v)
     
     def __eq__(self, other):
@@ -192,7 +191,7 @@ class Rule:
             if value is not None and not isinstance(value, Target):
                 value = Target(value)
         elif name == 'matches':
-            if not isinstance(value, types.ListType):
+            if not isinstance(value, list):
                 raise Exception("matches attribute requires a list")
         self.__dict__[name] = value
 

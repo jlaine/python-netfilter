@@ -19,9 +19,10 @@
 #
 
 import re
-import sys
-import types
-from UserDict import UserDict
+try:
+    from UserDict import UserDict
+except ImportError:
+    from collections import UserDict
 
 import netfilter.rule
 
@@ -43,10 +44,6 @@ class odict(UserDict):
     def keys(self):
         return self._keys
     
-    def iteritems(self):
-        for k in self._keys:
-            yield k, self[k]
-
 class ParseError(Exception):
     pass
 
@@ -59,7 +56,7 @@ def split_words(line):
 
     if '"' in line:
         # handle quoted arguments
-        return map(unquote, re_word.findall(line))
+        return [ unquote(x) for x in re_word.findall(line) ]
     else:
         # shortcut for the bulk of cases
         return line.split()

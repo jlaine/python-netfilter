@@ -233,7 +233,7 @@ class RuleTestCase(unittest.TestCase):
 
     def testTargetLog(self):
         rule = Rule(jump=Target('LOG', '--log-prefix "ICMP accepted : " --log-level 4'))
-        self.assertEqual(rule.specbits(), ['-j', 'LOG', '--log-prefix', 'ICMP accepted : ', '--log-level', '4'])
+        self.assertEqual(rule.specbits(), ['-j', 'LOG', '--log-level', '4', '--log-prefix', 'ICMP accepted : '])
 
     def testMatchMark(self):
         rule = Rule(jump='ACCEPT')
