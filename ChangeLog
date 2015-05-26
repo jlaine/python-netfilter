@@ -1,4 +1,4 @@
-python-netfilter 0.6.0 (UNRELEASED)
+python-netfilter 0.6.0 (2015-05-21)
  * Handle negated source / destination / protocol / interfaces.
 
 python-netfilter 0.5.9 (2012-10-02)
