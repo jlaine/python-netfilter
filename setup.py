@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='python-netfilter',
-    version='0.6.0',
+    version='0.6.1',
     description='Python modules for manipulating netfilter rules',
     url='https://github.com/jlaine/python-netfilter',
     author='Jeremy Laine',
