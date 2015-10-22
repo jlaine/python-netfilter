@@ -36,6 +36,9 @@ class IptablesError(Exception):
 class Table:
     """The Table class represents a netfilter table (IPv4 or IPv6).
     """
+
+    __iptables_wait_option = None
+
     def __init__(self, name, auto_commit = True, ipv6 = False):
         """Constructs a new netfilter Table.
         
@@ -138,7 +141,15 @@ class Table:
         return netfilter.parser.parse_chains(data)
     
     def __run_iptables(self, args):
-        cmd = [self.__iptables, '-t', self.__name] + args
+        if Table.__iptables_wait_option is None:
+            # check whether iptables supports --wait
+            try:
+                self.__run([self.__iptables, '-L', '-n', '--wait'])
+                Table.__iptables_wait_option = ['--wait']
+            except:
+                Table.__iptables_wait_option = []
+
+        cmd = [self.__iptables] + Table.__iptables_wait_option + ['-t', self.__name] + args
         if self.auto_commit:
             self.__run(cmd)
         else:
