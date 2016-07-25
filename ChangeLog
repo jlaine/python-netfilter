@@ -1,3 +1,6 @@
+python-netfilter 0.6.4 (2016-07-25)
+ * Decode output of subprocess.Popen for python3 compatibility.
+
 python-netfilter 0.6.3 (2015-10-22)
  * Invoke iptables with --wait option if supported.
 
