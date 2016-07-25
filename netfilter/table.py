@@ -161,6 +161,8 @@ class Table:
             stderr=subprocess.PIPE,
             close_fds=True)
         out, err = p.communicate()
+        out = out.decode('utf8')
+        err = err.decode('utf8')
         status = p.wait()
         # check exit status
         if not os.WIFEXITED(status) or os.WEXITSTATUS(status):
