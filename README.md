@@ -1,6 +1,6 @@
 python-netfilter - Python modules for manipulating netfilter rules  
 Copyright (C) 2007-2012 Bolloré Telecom  
-Copyright (C) 2013-2015 Jeremy Lainé
+Copyright (C) 2013-2016 Jeremy Lainé
 
 About
 =====

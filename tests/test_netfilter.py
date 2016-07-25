@@ -2,7 +2,7 @@
 #
 # python-netfilter - Python modules for manipulating netfilter rules
 # Copyright (C) 2007-2012 Bolloré Telecom
-# Copyright (C) 2013 Jeremy Lainé
+# Copyright (C) 2013-2016 Jeremy Lainé
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
